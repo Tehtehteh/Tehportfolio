@@ -12,6 +12,8 @@ class SnippetView(generics.ListCreateAPIView):
     serializer_class = SnippetSerializer
     permission_classes = (IsAuthenticated,)
 
+# todo UpdateAPIView onto Snippet and BlogPost models.
+
 
 class BlogPostView(APIView):
     def lookup(self, request, keyword):
