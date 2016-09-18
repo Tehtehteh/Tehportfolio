@@ -1,4 +1,5 @@
 from django.contrib import admin
+from .models import  BlogPost
 
 # Register your models here.
-admin.site.Register('BlogPost')
+admin.site.register(BlogPost)
