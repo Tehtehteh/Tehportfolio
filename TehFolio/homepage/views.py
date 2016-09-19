@@ -1,12 +1,20 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
+import vk
 from rest_framework import status, generics
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from .models import BlogPost, Snippet, Person
 from .serializers import PostSerializer, SnippetSerializer, PersonSerializer
 
+
+def getLikes(request):
+    session = vk.Session()
+    api = vk.API(session)
+    data = api.likes.getList(type='sitepage', page_url='fin.trade', owner_id='5629812', offset=1, extended=True)
+    print(data)
+    return render(request, 'test.html', {'data': data['items']})
 
 class PersonView(APIView):
     def get(self, request, format=None):
