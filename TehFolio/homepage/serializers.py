@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import BlogPost, Snippet
+from .models import BlogPost, Snippet, Person
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -16,4 +16,10 @@ class PostSerializer(serializers.ModelSerializer):
 class SnippetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Snippet
+        fields = '__all__'
+
+
+class PersonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Person
         fields = '__all__'
