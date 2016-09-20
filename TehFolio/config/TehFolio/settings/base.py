@@ -59,7 +59,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'apps', 'templates/')],
-        'APP_DIRS': False,
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -71,8 +71,8 @@ TEMPLATES = [
     },
     {
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'DIRS': [os.path.join(BASE_DIR, 'apps', 'templates/')],
-        'APP_DIRS': False,
+        'DIRS': [],
+        'APP_DIRS': True,
         'OPTIONS': {'environment': 'config.TehFolio.jinja2.Environment',}
     }
 ]

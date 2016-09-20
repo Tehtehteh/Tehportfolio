@@ -54,6 +54,10 @@ body{
     }
 }
 
+.container-fluid {
+    padding-top: 3px;
+
+}
 
 
 
