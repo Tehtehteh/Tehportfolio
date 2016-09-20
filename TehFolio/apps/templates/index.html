@@ -1,0 +1,35 @@
+ <!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load staticfiles %}
+      <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+      <link rel="stylesheet" href = "{% static 'css/bootstrap.min.css' %}" type="text/css"/>
+      <link rel="stylesheet" href = "{% static 'css/style.css' %}" type="text/css"/>
+      <meta charset="UTF-8">
+      <title>Teh is the new the</title>
+  </head>
+  <body>
+  {% verbatim %}
+    <header>
+        <div class="nav">
+            <ul>
+                <li><a>Homepage</a></li>
+                <li><a>Snippets</a></li>
+                <li><a>PyScrapper</a></li>
+                <li><a>Glimpse</a></li>
+            </ul>
+        </div>
+    </header>
+    {% block content %}
+    {% endblock %}
+  </body>
+    <script>
+        $('a').click(function(){
+            $('a').removeClass('active');
+            $(this).addClass('active');
+       })
+    </script>
+ {% endverbatim %}
+</html>
