@@ -24,3 +24,7 @@
 .navbar li:hover{
     background-color: #1e87db;
 }
+.navbar .active{
+    background-color: #1e87db;
+    cursor: default;
+}

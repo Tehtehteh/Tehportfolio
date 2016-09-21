@@ -13,19 +13,6 @@
   </head>
   <body ng-app="folio">
     <header>
-        <!--<div class="nav">-->
-            <!--<div class="left-logo">-->
-                <!--<img src="{% static 'img/CS.png' %}" alt="face"/>-->
-            <!--</div>-->
-            <!--<div class="right-menu">-->
-                <!--<ul>-->
-                    <!--<li><a>Homepage</a></li>-->
-                    <!--<li><a href="#">Snippets</a></li>-->
-                    <!--<li><a>PyScrapper</a></li>-->
-                    <!--<li><a>Glimpse</a></li>-->
-                <!--</ul>-->
-            <!--</div>-->
-        <!--</div>-->
         <nav class="navbar navbar-default navbar-fixed-top">
           <div class="container">
             <div class="navbar-header">
@@ -39,10 +26,10 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Home</a></li>
-                  <li><a href="#about">Snippets</a></li>
-                <li><a href="#about">News</a></li>
-                <li><a href="#contact">Glimpse</a></li>
+                    <li><a>Home</a></li>
+                    <li><a>Snippets</a></li>
+                    <li><a>News</a></li>
+                    <li><a>Glimpse</a></li>
               </ul>
             </div><!--/.nav-collapse -->
           </div>
@@ -51,6 +38,13 @@
     {% verbatim %}
     <div class="container-fluid">
         <div ng-controller="snippetController">
+            <div ng-show="!snippets.length">
+                <div class="jumbotron">
+                    <p class="lead">
+                        No snippets
+                    </p>
+                </div>
+            </div>
             <div class="panel" ng-repeat="snippet in snippets">
                 <div class="panel-heading clearfix">
                     <h3 class="panel-title">{{ snippet.title }}</h3>
@@ -64,6 +58,7 @@
   </body>
     <script>
         $('a').click(function(){
+            console.log('this');
             $('a').removeClass('active');
             $(this).addClass('active');
        })
