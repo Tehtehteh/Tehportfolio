@@ -8,55 +8,44 @@
       <script src="{% static 'js/bootstrap.min.js' %}" defer></script>
       <link rel="stylesheet" href = "{% static 'css/bootstrap.min.css' %}" type="text/css"/>
       <link rel="stylesheet" href = "{% static 'css/my-style.css' %}" type="text/css"/>
+      <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+      <!-- Angular Material Library -->
+      <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
       <meta charset="UTF-8">
       <title>Teh is the new the</title>
   </head>
-  <body ng-app="folio">
+  <body ng-app="folio" class="toolbardemoBasicUsage">
     <header>
-        <nav class="navbar navbar-default navbar-fixed-top">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#">Folio</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav navbar-right">
-                    <li><a>Home</a></li>
-                    <li><a>Snippets</a></li>
-                    <li><a>News</a></li>
-                    <li><a>Glimpse</a></li>
-              </ul>
-            </div><!--/.nav-collapse -->
+
+    <md-content>
+        <md-toolbar class="md-hue-2">
+          <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+              <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
+            </md-button>
+            <h2>
+              <span>Toolbar with Disabled/Enabled Icon Buttons</span>
+            </h2>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="Favorite">
+              <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="More">
+              <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
+            </md-button>
           </div>
-        </nav>
+        </md-toolbar>
+    </md-content>
     </header>
     {% verbatim %}
-    <div class="container-fluid">
-        <div ng-controller="snippetController">
-            <div ng-show="!snippets.length">
-                <div class="jumbotron">
-                    <p class="lead">
-                        No snippets
-                    </p>
-                </div>
-            </div>
-            <div class="panel" ng-repeat="snippet in snippets">
-                <div class="panel-heading clearfix">
-                    <h3 class="panel-title">{{ snippet.title }}</h3>
-                </div>
-                <p class="well">{{ snippet.body }}</p>
-            </div>
-        </div>
-    </div>
     {% endverbatim %}
   <script src = "{% static 'js/main.js' %}"></script>
   </body>
     <script>
+    angular.module('tabsDemoDynamicHeight', ['ngMaterial']);
         $('a').click(function(){
             console.log('this');
             $('a').removeClass('active');

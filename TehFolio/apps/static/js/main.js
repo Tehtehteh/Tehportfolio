@@ -1,5 +1,4 @@
-app = angular.module('folio',[])
-
+app = angular.module('folio', ['ngMaterial']);
 var SnippetController = function ($scope, $http){
     $scope.snippets = [];
         $http.get('/api/snippets').then(function(result){

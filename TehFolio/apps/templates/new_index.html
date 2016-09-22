@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <title>Teh is new the</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <link rel="stylesheet" href="{% static 'css/my-style.css' %}"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+</head>
+<body ng-app="folio" layout="column">
+    <div ng-controller="AuthController">
+    <md-toolbar>
+          <div class="md-toolbar-tools">
+            <span flex></span>
+                <h2>
+                    <span>
+                        TEHFOLIO
+                    </span>
+                </h2>
+                <span flex></span>
+                <md-button ng-href="{% url 'homepage' %}">
+                    Homepage
+                </md-button>
+                <md-button aria-label="Learn More">
+                    Snippets
+                </md-button>
+                <md-button aria-label="Learn More">
+                    News
+                </md-button>
+                <md-button aria-label="Learn More">
+                    About us
+                </md-button>
+                <md-button ng-click="showPrompt($event)"  >
+                    Login
+                </md-button>
+              <span flex></span>
+          </div>
+    </div>
+    </md-toolbar>
+    <div ng-if="false">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+    {% if request.user.authenticated %}
+        {% verbatim %}
+        <div ng-controller="SnippetController" layout="column">
+            <div ng-repeat="snippet in snippets">
+                <div layout="row" layout-padding layout-wrap layout-margin ng-cloak layout-align="space-around" >
+                  <div class="padded" flex="100" flex-gt-sm="50" layout="column" layout-align="center center">
+                    <span><h3>{{snippet.title}}</h3></span>
+                    <span>{{snippet.body}}</span>
+                  </div>
+                </div>
+            </div>
+        </div>
+        {% endverbatim %}
+    {% else %}
+        <div layout="row" layout-padding layout-wrap layout-margin ng-cloak layout-align="space-around" >
+              <div class="padded" flex="100" flex-gt-sm="50" layout="column" layout-align="center center">
+                <span><h3>No credentials provided.</h3></span>
+                <span>Please log in.</span>
+              </div>
+        </div>
+        <md-dialog aria-label="Login" ng-cloak>
+
+    <form name="loginForm" data-ng-submit="vm.handleSubmit()">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Login</h2>
+                <span flex></span>
+                <md-button type="button" class="md-icon-button" ng-click="vm.handleCancel(); $event.stopPropagation();">
+                    <md-icon md-svg-icon="navigation:close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-input-container class="md-block">
+                    <label>Username:</label>
+                    <input ng-model="vm.username" required>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Password:</label>
+                    <input ng-model="vm.password" type="password" required>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button type="submit" class="md-primary"
+                       ng-class="{'md-raised md-hue-1': (loginForm.$dirty && loginForm.$valid) }"
+                       aria-label="OK">
+                OK
+            </md-button>
+            <md-button type="button" ng-click="vm.handleCancel(); $event.stopPropagation();"
+                       aria-label="Cancel">
+                Cancel
+            </md-button>
+        </md-dialog-actions>
+
+    </form>
+
+</md-dialog>
+    {% endif %}
+
+</body>
+<script src = "{% static 'js/app.js' %}"></script>
+</html>
