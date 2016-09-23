@@ -38,7 +38,7 @@ class PersonView(APIView):
 class SnippetView(generics.ListCreateAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
 # todo UpdateAPIView onto Snippet and BlogPost models.
 
