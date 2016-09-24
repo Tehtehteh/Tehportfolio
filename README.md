@@ -1,5 +1,5 @@
 # Tehportfolio
-SPA built with `Django` and `ReactJS` which
+SPA built with `Django` and `AngularJS` which
 consists of three separate applications:<br>
 1) Homepage — root application for projects below. </br>
 2) Glimpse — under development.</br>
