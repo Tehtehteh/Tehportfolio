@@ -2,11 +2,32 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 import vk
+from rest_framework.status import HTTP_400_BAD_REQUEST
+from django.contrib.auth import authenticate, login
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status, generics
-from rest_framework.decorators import api_view
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import BlogPost, Snippet, Person
-from .serializers import PostSerializer, SnippetSerializer, PersonSerializer
+from .serializers import PostSerializer, SnippetSerializer, PersonSerializer, UserSerializer
+
+
+class Authenticate(APIView):
+    permission_classes = [AllowAny]
+    serializer_class = UserSerializer
+
+    def post(self, request):
+        data = request.data
+        serializer = UserSerializer(data=data)
+        if serializer.is_valid(raise_exception=True):
+            new_data = serializer.data
+            username = new_data['username']
+            password = new_data['password']
+            acc = authenticate(username=username, password=password)
+            if acc:
+                login(request=request, user=acc)
+            else:
+                return Response(status=HTTP_400_BAD_REQUEST)
+            return Response(new_data, status=200)
 
 
 def getLikes(request):
@@ -16,9 +37,10 @@ def getLikes(request):
     print(data)
     return render(request, 'test.html', {'data': data['items']})
 
+
 class PersonView(APIView):
     def get(self, request, format=None):
-        persons= Person.objects.all()
+        persons = Person.objects.all()
         serializer = PersonSerializer(persons, many=True)
         return Response(serializer.data)
 
@@ -38,7 +60,7 @@ class PersonView(APIView):
 class SnippetView(generics.ListCreateAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
 # todo UpdateAPIView onto Snippet and BlogPost models.
 
