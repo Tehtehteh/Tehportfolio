@@ -21,6 +21,7 @@
     background-color: #1e87db;
 }
 .md-toolbar-tools{
+    box-shadow: 1px 2px 3px rgb(121,134,203);
     background-color: #03A9F4;
 }
 .menuBardemoBasicUsage .page-container {
