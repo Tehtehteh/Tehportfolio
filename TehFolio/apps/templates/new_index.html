@@ -16,7 +16,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-cookies.min.js"></script>
 </head>
 <body ng-app="folio" layout="column">
-    <div ng-controller="AuthController as vm">
+    <div ng-controller="AuthController">
         <md-toolbar>
               <div class="md-toolbar-tools">
                 <span flex></span>
@@ -37,9 +37,19 @@
                         About us
                     </md-button>
                     <md-button ng-click="toggleRight()"
-                        ng-hide="vm.isAuthenticated">
+                        ng-hide="isAuthenticated">
                         Log In
                     </md-button>
+                    {% verbatim %}
+                    <div ng-show="isAuthenticated">
+                        <h4>
+                            Welcome, {{username}}
+                            <md-button class="md-raised" ng-click="logout()">
+                                logout?
+                            </md-button>
+                        </h4>
+                    </div>
+                    {% endverbatim %}
                   <span flex></span>
               </div>
         </md-toolbar>
@@ -48,25 +58,28 @@
         </div>
     <!--- SIDE NAV MENU ---->
             <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
-                  <md-toolbar ng-if="!auth" class="md-theme-light">
+                  <md-toolbar class="md-theme-light">
                     <h1 class="md-toolbar-tools">Log in</h1>
                   </md-toolbar>
                   <md-content layout-padding>
-                    <form ng-submit="vm.login()">
+                    <form ng-submit="login()">
                       <md-input-container>
                             <label for="username">Enter your username: </label>
                             <input type="text" id="username"
-                                   ng-model="vm.username" placeholder="user">
+                                   ng-model="username" placeholder="user">
                         </md-input-container>
                         <md-input-container>
                             <label for="password">Enter your password: </label>
                             <input type="password" id="password"
-                                   ng-model="vm.password" placeholder="password">
+                                   ng-model="password" placeholder="password">
                         </md-input-container>
                         <md-button type="submit" class="md-raised">
                           Login
                         </md-button>
                     </form>
+                      <md-button class="md-raised" ng-click="test()">
+                          test
+                        </md-button>
                   </md-content>
             </md-sidenav>
     </div>
@@ -93,5 +106,12 @@
     </div>
 
 </body>
+<script>
+var app = angular.module('<folio></folio>');
+app.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';
+}]);
+console.log({{ csrf_token|escapejs }});
+</script>
 <script src = "{% static 'js/public/controllers/controller.js' %}"></script>
 </html>

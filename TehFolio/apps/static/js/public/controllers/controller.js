@@ -1,6 +1,6 @@
 app = angular.module('folio', ['ngMaterial', 'ngCookies']);
 
-var AuthenticationService = function($http, $cookies){
+var AuthenticationService = function($http, $cookies, $log){
 
     function login(username, password){
         $http.post(
@@ -20,22 +20,31 @@ var AuthenticationService = function($http, $cookies){
     }
 
     function getAuthenticatedAccount(){
-        if(!$cookies.authenticatedAccount){
+        if(!JSON.stringify($cookies.get('username'))){
             return;
         }
-        return JSON.parse($cookies.authenticatedAccount)
+        return JSON.parse($cookies.get('username'))
     }
 
     function isAuthenticated(){
-        return ($cookies.authenticatedAccount) ? false : true;
+        return (getAuthenticatedAccount()!=undefined);
     }
 
     function setAuthenticatedAccount(account){
-        $cookies.authenticatedAccount = JSON.stringify(account);
+        $log.log('Set auth account to:', account);
+        $cookies.put('username', JSON.stringify(account['username']),
+                    { expires: new Date(2016, 10, 10) }
+                    )
+        $log.log('Set account. ', $cookies.get('username'));
     }
 
     function unAuthenticate(){
-        delete $cookies.authenticatedAccount;
+        if (isAuthenticated){
+            $http.post(
+            '/api/logout'
+            ).then(loginSuccess, loginError);
+            $cookies.delete('username');
+        }
     }
 
     var AuthenticationService = {
@@ -58,17 +67,26 @@ var SnippetController = function ($scope, $http){
     })
 }
 var AuthController = function($scope, $http, $log, $mdSidenav, AuthenticationService){
-    var vm = this;
 
-    vm.login = login;
+    $scope.login = login;
 
     activate();
 
-    vm.isAuthenticated = AuthenticationService.isAuthenticated();
+    $scope.logout = logout;
+
+    function logout(){
+        AuthenticationService.unAuthenticate();
+        $log.log('logout successful.');
+        AuthenticationService.getAuthenticatedAccount();
+    }
+
+    $scope.username = AuthenticationService.getAuthenticatedAccount();
+
+    $scope.isAuthenticated = AuthenticationService.isAuthenticated();
 
     function login(){
         $log.log('Clicked!');
-        AuthenticationService.login(vm.username, vm.password);
+        AuthenticationService.login($scope.username, $scope.password);
     }
 
     function activate(){
@@ -93,7 +111,7 @@ var AuthController = function($scope, $http, $log, $mdSidenav, AuthenticationSer
         $mdSidenav('right').close();
     }
 }
-AuthenticationService.$inject = ['$http', '$cookies'];
+AuthenticationService.$inject = ['$http', '$cookies', '$log'];
 AuthController.$inject = ['$scope', '$http', '$log', '$mdSidenav', 'AuthenticationService'];
 SnippetController.$inject = ['$scope', '$http' ];
 app

@@ -2,13 +2,24 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 import vk
-from rest_framework.status import HTTP_400_BAD_REQUEST
-from django.contrib.auth import authenticate, login
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
+from django.contrib.auth import authenticate, login, logout
+# from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status, generics
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import BlogPost, Snippet, Person
 from .serializers import PostSerializer, SnippetSerializer, PersonSerializer, UserSerializer
+
+
+class Logout(APIView):
+    permission_classes = [IsAuthenticated, ]
+
+    def post(self, request):
+        if request.user.is_authenticated:
+            logout(request.user)
+            return Response(status=HTTP_200_OK)
+        else:
+            return Response(status=HTTP_400_BAD_REQUEST)
 
 
 class Authenticate(APIView):
@@ -66,6 +77,7 @@ class SnippetView(generics.ListCreateAPIView):
 
 
 class BlogPostView(APIView):
+
     def lookup(self, request, keyword):
         posts = BlogPost.objects.filter(body__contains=keyword)
         if posts:
