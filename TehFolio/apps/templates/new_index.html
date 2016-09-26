@@ -43,7 +43,7 @@
                     {% verbatim %}
                     <div ng-show="isAuthenticated">
                         <h4>
-                            Welcome, {{username}}
+                            Welcome, {{username}}, {{AuthController.someVar}}
                             <md-button class="md-raised" ng-click="logout()">
                                 logout?
                             </md-button>
@@ -53,9 +53,6 @@
                   <span flex></span>
               </div>
         </md-toolbar>
-        <div ng-if="false">
-            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-        </div>
     <!--- SIDE NAV MENU ---->
             <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
                   <md-toolbar class="md-theme-light">
@@ -98,7 +95,7 @@
 
         {% endverbatim %}
 
-    <div layout="row" layout-padding layout-wrap layout-margin ng-cloak layout-align="space-around" >
+    <div ng-hide="AuthenticationService.isAuthenticated"layout="row" layout-padding layout-wrap layout-margin ng-cloak layout-align="space-around" >
           <div class="padded" flex="100" flex-gt-sm="50" layout="column" layout-align="center center">
             <span><h3>No credentials provided.</h3></span>
             <span>Please log in.</span>
@@ -106,12 +103,14 @@
     </div>
 
 </body>
-<script>
-var app = angular.module('<folio></folio>');
-app.config(['$httpProvider', function($httpProvider) {
-    $httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';
-}]);
-console.log({{ csrf_token|escapejs }});
-</script>
+<!--<script>-->
+<!--var app = angular.module('<folio></folio>');-->
+<!--app.config(['$httpProvider', function($httpProvider) {-->
+    <!--$httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';-->
+<!--}]);-->
+<!--console.log({{ csrf_token|escapejs }});-->
+<!--</script>-->
+<script src = "{% static 'js/public/app.js' %}"></script>
 <script src = "{% static 'js/public/controllers/controller.js' %}"></script>
+<script src = "{% static 'js/public/services/authentication.js' %}"></script>
 </html>
