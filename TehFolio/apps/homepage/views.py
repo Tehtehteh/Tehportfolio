@@ -35,6 +35,7 @@ class Authenticate(APIView):
             password = new_data['password']
             acc = authenticate(username=username, password=password)
             if acc:
+                print(dir(request))
                 login(request=request, user=acc)
             else:
                 return Response(status=HTTP_400_BAD_REQUEST)
@@ -108,4 +109,5 @@ class BlogPostView(APIView):
 
 
 def index(request):
-    return render(request, 'new_index.html')
+    #return render(request, 'new_index.html')
+    return render(request, 'index.html')
