@@ -103,14 +103,13 @@
     </div>
 
 </body>
-<!--<script>-->
-<!--var app = angular.module('<folio></folio>');-->
-<!--app.config(['$httpProvider', function($httpProvider) {-->
-    <!--$httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';-->
-<!--}]);-->
-<!--console.log({{ csrf_token|escapejs }});-->
-<!--</script>-->
 <script src = "{% static 'js/public/app.js' %}"></script>
 <script src = "{% static 'js/public/controllers/controller.js' %}"></script>
 <script src = "{% static 'js/public/services/authentication.js' %}"></script>
+<script>
+var app = angular.module('folio');
+app.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';
+}]);
+</script>
 </html>
