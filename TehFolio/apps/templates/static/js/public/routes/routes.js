@@ -21,6 +21,12 @@ angular
                     templateUrl: 'http://localhost:8000/static/js/public/views/snippets.html'
                 }
             )
+            .when('/login',
+                {
+                    controller: 'AuthorizationController',
+                    templateUrl: 'http://localhost:8000/static/js/public/views/login.html'
+                }
+            )
             .otherwise({
                 redirectTo: '/'
             })

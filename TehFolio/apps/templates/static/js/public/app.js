@@ -1,5 +1,5 @@
 (function(){
 
-    app = angular.module('folio', ['ngMaterial', 'ngCookies', 'ngRoute']);
+    app = angular.module('folio', ['ngMaterial', 'ngCookies', 'ngRoute', 'ngMessages']);
 
 })();

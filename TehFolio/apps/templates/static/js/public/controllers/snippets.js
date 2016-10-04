@@ -14,6 +14,8 @@ angular
         function init(){
             snippetsFactory.getSnippets().then(function(result){
                 $scope.snippets = result.data;
+            }, function(error){
+                $log.log('Error encountered: ', error.data.detail);
             });
         }
     }
