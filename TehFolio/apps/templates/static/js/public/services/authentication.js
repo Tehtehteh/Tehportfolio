@@ -41,9 +41,9 @@ var AuthenticationService = function($http, $cookies, $log){
 
     function unAuthenticate(){
         if (isAuthenticated){
-            $http.post(
-            '/api/logout'
-            ).then(loginSuccess, loginError);
+            return $http.post(
+                '/api/logout'
+                ).then(loginSuccess, loginError);
             $cookies.delete('username');
         }
     }
