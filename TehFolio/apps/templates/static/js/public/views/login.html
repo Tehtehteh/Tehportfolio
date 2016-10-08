@@ -1,6 +1,6 @@
 <md-content layout="row" layout-align="center center">
     <md-card>
-        <md-card-title>
+        <md-card-title style="padding:0">
             <md-toolbar>
                 <div class="md-toolbar-tools">
                     Please provide your credentials in order to login.
@@ -9,8 +9,29 @@
         </md-card-title>
         <md-card-content>
             <div layout="row" layout-align="center center">
-                <form>
-
+                <form name="user" ng-submit="login()">
+                    <div class="alert alert-danger" ng-show="error" ng-bind="error">
+                        {{error}}
+                    </div>
+                    <md-input-container class="md-block">
+                        <label>Username</label>
+                        <input md-maxlength="30" required md-no-asterisk ng-model="user.name">
+                        <div ng-messages="user.name.$error">
+                          <div ng-message="required">This is required.</div>
+                          <div ng-message="md-maxlength">The description must be less than 30 characters long.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Password</label>
+                        <input md-maxlength="30" type="password" required md-no-asterisk ng-model="user.password">
+                        <div ng-messages="user.password.$error">
+                          <div ng-message="required">This is required.</div>
+                          <div ng-message="md-maxlength">The description must be less than 30 characters long.</div>
+                        </div>
+                    </md-input-container>
+                    <md-button style="margin-left: 30%;" class="md-primary md-raised" type="submit">
+                        Login
+                    </md-button>
                 </form>
             </div>
         </md-card-content>

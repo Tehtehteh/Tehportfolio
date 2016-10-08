@@ -13,8 +13,11 @@
         <md-button href="#news">
             News!
         </md-button>
-        <md-button href="#login">
+        <md-button ng-hide="AuthenticationService.isAuthenticated()" href="#login">
             Login
+        </md-button>
+        <md-button ng-show="auth" href="#logout" ng-click="AuthenticationService.unAuthenticate">
+            Logout?
         </md-button>
       </div>
 </md-toolbar>

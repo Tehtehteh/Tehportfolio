@@ -1,6 +1,8 @@
 (function() {
 
-var AuthenticationService = function($http, $cookies, $log){
+var AuthenticationService = function($rootScope, $http, $cookies, $log){
+
+    $rootScope.auth = isAuthenticated()? true : false ;
 
     function login(username, password){
         return $http.post(
@@ -17,7 +19,7 @@ var AuthenticationService = function($http, $cookies, $log){
     }
 
     function loginError(data, status, header, config){
-        console.error('Incorrect credentials.')
+        return data.data;
     }
 
     function getAuthenticatedAccount(){
@@ -32,16 +34,15 @@ var AuthenticationService = function($http, $cookies, $log){
     }
 
     function setAuthenticatedAccount(account){
-        $log.log('Set auth account to:', account);
         $cookies.put('username', JSON.stringify(account['username']),
-                    { expires: new Date(2016, 10, 10) }
+                    { expires: new Date(2017, 10, 15) }
                     )
-        $log.log('Set account. ', $cookies.get('username'));
     }
 
     function unAuthenticate(){
         if (isAuthenticated){
-            return $http.post(
+            $log.info('Trying to log out');
+            $http.post(
                 '/api/logout'
                 ).then(loginSuccess, loginError);
             $cookies.delete('username');
@@ -58,7 +59,7 @@ var AuthenticationService = function($http, $cookies, $log){
 
     return AuthenticationService;
 }
-AuthenticationService.$inject = ['$http', '$cookies', '$log'];
+AuthenticationService.$inject = ['$rootScope', '$http', '$cookies', '$log'];
 angular.module('folio')
        .service('AuthenticationService', AuthenticationService);
 })();

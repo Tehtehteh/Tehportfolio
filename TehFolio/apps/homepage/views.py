@@ -109,5 +109,4 @@ class BlogPostView(APIView):
 
 
 def index(request):
-    #return render(request, 'new_index.html')
     return render(request, 'index.html')
